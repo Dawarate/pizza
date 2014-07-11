@@ -1,0 +1,80 @@
+<?php
+echo $this->headTitle('Drinks');
+?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" >
+</script>
+<script>
+	
+
+	function delete_drink(drink_id)
+		{
+			var result = confirm('are you sure ?');
+			if(result == true)
+				{
+					$.ajax({
+						type : 'POST',
+						url  : '/drink/delete',
+						data : {'id': drink_id},
+                        success: function(data)
+							{
+								if(data.response == 'the selected drink was successfuly deleted')
+									{
+									$("#row_"+drink_id).fadeOut(2000, function(){
+									$("#row_"+drink_id).remove(); });	
+									}
+								else
+									{
+										alert("Drink could not be deleted");
+									}
+								
+							},
+						failure: function()
+							{
+								alert(" could not connect to the delete action");
+							}
+					});
+				}
+			
+			
+		}
+</script>
+<div class="row">
+  <div class="col-md-8"> <h1> List of our Drinks </h1>
+ </div>
+  <div class="col-md-4"> <a href="<?php echo $this->url('drink',array('action'=>'add'));?>">  <b class="glyphicon glyphicon-plus"> </b> </a> </div>
+</div>
+
+<table class="table" id="myTable">
+	<tr>
+		<td> Drink name </td>
+		<td> Type </td>
+		<td> Size </td>
+		<td> Price</td>
+		
+		<td></td>
+		
+	</tr> 
+
+<?php if(!empty($this->drinks)) :?>
+	
+	<?php foreach($this->drinks as $drink) :?>
+		<tr id="<?php echo "row_".$drink->id; ?>">
+			<td>  <?php echo $this->escapeHtml($drink->name);?> </td>
+			<td>  <?php echo $this->escapeHtml($drink->drink_type);?> </td>
+			<td>  <?php echo $this->escapeHtml($drink->size);?> </td>
+			<td>  <?php echo $this->escapeHtml($drink->price);?></td>
+	
+			<td>   <a href="<?php echo $this->url('drink' ,array('action' => 'edit' , 
+																 'id'     => $drink->id
+																 ));
+					        ?>"> <b class="glyphicon glyphicon-cog"> </b> </a> 
+
+			       <a onclick="delete_drink(<?php echo $drink->id;?>);"> <b class="glyphicon glyphicon-trash"> </b> </a> </td> 
+				
+		<tr>
+	<?php endforeach;?> 
+
+	<?php //print_r($drinks);?> 
+<?php endif ;?>
+</table>
+

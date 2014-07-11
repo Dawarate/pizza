@@ -1,0 +1,28 @@
+<?php
+echo $this->headTitle('Edit drink');
+?>
+
+<div class="row">
+  <div class="col-md-8"> <h1> Edit drink </h1>
+ </div>
+  <div class="col-md-4">  </div>
+</div>
+
+<?php 
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('drink',array('action'=>'edit' , 'id' => $this->id)));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formHidden($form->get('id')) . "</br>";
+echo $this->formRow($form->get('name')) . "</br>";
+echo $this->formRow($form->get('drink_type')) . "</br>";
+echo $this->formRow($form->get('size')) . "</br>";
+echo $this->formRow($form->get('price')) . "</br>";
+echo $this->formRow($form->get('editdrink')) . "</br>";
+echo $this->form()->closeTag();
+
+?>
+
+

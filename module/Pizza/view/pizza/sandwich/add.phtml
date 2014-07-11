@@ -1,0 +1,27 @@
+<?php
+echo $this->headTitle('Add new Sandwich');
+?>
+
+<div class="row">
+  <div class="col-md-8"> <h1> Add new sandwich </h1>
+ </div>
+  <div class="col-md-4">  </div>
+</div>
+
+<?php 
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('sandwich',array('action'=>'add')));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('name')) . "</br>";
+echo $this->formRow($form->get('ingredients')) . "</br>";
+echo $this->formRow($form->get('smallprice')) . "</br>";
+echo $this->formRow($form->get('bigprice')) . "</br>";
+echo $this->formRow($form->get('addsandwich')) . "</br>";
+echo $this->form()->closeTag();
+
+?>
+
+

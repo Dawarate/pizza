@@ -1,0 +1,78 @@
+<?php
+echo $this->headTitle('Pizzas');
+?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" >
+</script>
+<script>
+	
+
+	function delete_sandwich(sandwich_id)
+		{
+			var result = confirm('are you sure ?');
+			if(result == true)
+				{
+					$.ajax({
+						type : 'POST',
+						url  : '/sandwich/delete',
+						data : {'id': sandwich_id},
+                        success: function(data)
+							{
+								if(data.response == 'the selected sandwich was successfuly deleted')
+									{
+									$("#row_"+sandwich_id).fadeOut(2000, function(){
+									$("#row_"+sandwich_id).remove(); });	
+									}
+								else
+									{
+										alert("Sandwich could not be deleted");
+									}
+								
+							},
+						failure: function()
+							{
+								alert(" could not connect to the delete action");
+							}
+					});
+				}
+			
+			
+		}
+</script>
+<div class="row">
+  <div class="col-md-8"> <h1> List of our sandwiches </h1>
+ </div>
+  <div class="col-md-4"> <a href="<?php echo $this->url('sandwich',array('action'=>'add'));?>">  <b class="glyphicon glyphicon-plus"> </b> </a> </div>
+</div>
+
+<table class="table" id="myTable">
+	<tr>
+		<td> Sandwich name </td>
+		<td> Ingredients </td>
+		<td> Small price </td>
+		<td> Big price</td>
+		
+		<td></td>
+		
+	</tr> 
+
+<?php if(!empty($sandwiches)) :?>
+	
+	<?php foreach($sandwiches as $sandwich) :?>
+		<tr id="<?php echo "row_".$sandwich->id; ?>">
+			<td>  <?php echo $this->escapeHtml($sandwich->name);?> </td>
+			<td>  <?php echo $this->escapeHtml($sandwich->ingredients);?> </td>
+			<td>  <?php echo $this->escapeHtml($sandwich->smallprice);?> </td>
+			<td>  <?php echo $this->escapeHtml($sandwich->bigprice);?></td>
+			
+			<td>   <a href="<?php echo $this->url('sandwich' ,array('action' => 'edit' , 
+																    'id'     => $sandwich->id
+																 ));
+					        ?>"> <b class="glyphicon glyphicon-cog"> </b> </a> 
+
+			       <a onclick="delete_sandwich(<?php echo $sandwich->id;?>);"> <b class="glyphicon glyphicon-trash"> </b> </a> </td> 
+				
+		<tr>
+	<?php endforeach;?>
+<?php endif ;?>
+</table>
+

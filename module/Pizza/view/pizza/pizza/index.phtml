@@ -1,0 +1,80 @@
+<?php
+echo $this->headTitle('Pizzas');
+?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" >
+</script>
+<script>
+	
+
+	function delete_pizza(pizza_id)
+		{
+			var result = confirm('are you sure ?');
+			if(result == true)
+				{
+					$.ajax({
+						type : 'POST',
+						url  : '/pizza/delete',
+						data : {'id': pizza_id},
+                        success: function(data)
+							{
+								if(data.response == 'the selected pizza was successfuly deleted')
+									{
+									$("#row_"+pizza_id).fadeOut(2000, function(){
+									$("#row_"+pizza_id).remove(); });	
+									}
+								else
+									{
+										alert("Pizza could not be deleted");
+									}
+								
+							},
+						failure: function()
+							{
+								alert(" could not connect to the delete action");
+							}
+					});
+				}
+			
+			
+		}
+</script>
+<div class="row">
+  <div class="col-md-8"> <h1> List of our pizzas </h1>
+ </div>
+  <div class="col-md-4"> <a href="<?php echo $this->url('pizza',array('action'=>'add'));?>">  <b class="glyphicon glyphicon-plus"> </b> </a> </div>
+</div>
+
+<table class="table" id="myTable">
+	<tr>
+		<td> Pizza name </td>
+		<td> Ingredients </td>
+		<td> Small price </td>
+		<td> Big price</td>
+		<td> Family price </td>
+		<td> Party price </td>
+		<td></td>
+		
+	</tr> 
+
+<?php if(!empty($pizzas)) :?>
+	
+	<?php foreach($pizzas as $pizza) :?>
+		<tr id="<?php echo "row_".$pizza->id; ?>">
+			<td>  <?php echo $this->escapeHtml($pizza->name);?> </td>
+			<td>  <?php echo $this->escapeHtml($pizza->ingredients);?> </td>
+			<td>  <?php echo $this->escapeHtml($pizza->smallprice);?> </td>
+			<td>  <?php echo $this->escapeHtml($pizza->bigprice);?></td>
+			<td>  <?php echo $this->escapeHtml($pizza->familyprice);?> </td>
+			<td>  <?php echo $this->escapeHtml($pizza->partyprice);?> </td>
+			<td>   <a href="<?php echo $this->url('pizza' ,array('action' => 'edit' , 
+																 'id'     => $pizza->id
+																 ));
+					        ?>"> <b class="glyphicon glyphicon-cog"> </b> </a> 
+
+			       <a onclick="delete_pizza(<?php echo $pizza->id;?>);"> <b class="glyphicon glyphicon-trash"> </b> </a> </td> 
+				
+		<tr>
+	<?php endforeach;?>
+<?php endif ;?>
+</table>
+
