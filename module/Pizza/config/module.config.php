@@ -3,7 +3,8 @@ return array(
 	'controllers'  => array(
 		'invokables'=>array('Pizza\Controller\Pizza'    => 'Pizza\Controller\PizzaController',
 							'Pizza\Controller\Sandwich' => 'Pizza\Controller\SandwichController',
-							'Pizza\Controller\Drink'    => 'Pizza\Controller\DrinkController'),
+							'Pizza\Controller\Drink'    => 'Pizza\Controller\DrinkController',
+							'Pizza\Controller\Contact'  => 'Pizza\Controller\ContactController'),
 		),
 	'router'       => array(
 		'routes' => array(
@@ -46,7 +47,17 @@ return array(
 							),
 						   )
 						  ),
-
+		    'contact' => array(
+				'type'=> 'segment',
+				'options' => array(
+					'route' => '/contact[/]',
+					
+					'defaults' => array(
+						'controller'=> 'Pizza\Controller\Contact',
+						'action' => 'index'
+							),
+						   )
+						  ),
 						 )
 						),
 	'view_manager' => array('template_path_stack' => array('pizza' => __DIR__.'/../view'),

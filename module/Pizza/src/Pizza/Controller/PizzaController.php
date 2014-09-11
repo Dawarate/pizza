@@ -13,30 +13,8 @@ use Zend\Mail\Transport\SmtpOptions;
 class PizzaController extends AbstractActionController {
 	protected $pizzaTable;
 	public function indexAction()
-		{ /*    $message = new \Zend\Mail\Message();
-
-				$message->setBody('This is the body');
-				$message->setFrom('thegentletrainer@gmail.com');
-				$message->addTo('anass.rakibi@gmail.com');
-				$message->setSubject('Test subject');
-
-
-				$smtpOptions = new \Zend\Mail\Transport\SmtpOptions();
-
-				$smtpOptions->setHost('smtp.gmail.com')
-				            ->setConnectionClass('login')
-				            ->setName('smtp.gmail.com')
-				            ->setConnectionConfig(array(
-				                               'username' => 'thegentletrainer@gmail.com',
-				                               'password' => 'Gentle1Z1$s#R1|<ZA;',
-				                               'ssl' => 'tls',
-				                             )
-				                  );
-
-				$transport = new \Zend\Mail\Transport\Smtp($smtpOptions);
-				$transport->send($message); */
-
-			return new ViewModel(array('pizzas' => $this->getPizzaTable()->find_all()));
+		{ 
+			//return new ViewModel(array('pizzas' => $this->getPizzaTable()->find_all()));
 		}
 	public function addAction()
 		{
