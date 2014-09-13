@@ -28,8 +28,8 @@ class ContactController extends AbstractActionController
         		            ->setConnectionClass('login')
         		            ->setName('smtp.gmail.com')
         		            ->setConnectionConfig(array(
-        		            	'username' => 'anass.rakibi@gmail.com',
-        		            	'password' => '#############',
+        		            	'username' => 'anass.rakibi@gmail.com', // your gmail adress here ( if you want to use another host : hotmail ,... please look for its informations on google )
+        		            	'password' => '#############', // your own password of your email adress chosen.
         		            	'ssl'      => 'tls'
 	        		            ));
 
